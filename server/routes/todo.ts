@@ -5,9 +5,7 @@ const router = express.Router();
 
 // signup route
 router.post("/signup", userController.createUser, (req, res) => {
-  res
-    .status(200)
-    .json({ username: res.locals.username, id: res.locals.userId });
+  res.status(200).json({ username: res.locals.user, id: res.locals.userId });
 });
 
 // login route
