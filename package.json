@@ -12,8 +12,8 @@
     "express": "^4.18.2",
     "pg": "^8.8.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.4"
   },
   "devDependencies": {
     "@types/express": "^4.17.14",
@@ -21,9 +21,9 @@
     "@types/react-dom": "^18.0.7",
     "@vitejs/plugin-react": "^2.2.0",
     "concurrently": "^7.5.0",
-    "typescript": "^4.6.4",
-    "vite": "^3.2.0",
     "ts-node": "^10.9.1",
-    "tsconfig-paths": "^4.1.0"
+    "tsconfig-paths": "^4.1.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.2.0"
   }
 }
