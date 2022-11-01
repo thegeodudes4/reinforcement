@@ -9,7 +9,7 @@ import CreateHouseholdContainer from './CreateHouseholdContainer';
 const MainContainer = () => {
   return (
     <div className="mainContainer">
-      <h1 id="header">Roommate Chores App</h1>
+      <h1>Main Container</h1>
         <CreateHouseholdContainer />
         <CreateTaskContainer />
         <HeaderContainer />
