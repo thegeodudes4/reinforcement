@@ -5,7 +5,7 @@ import HouseholdList from '../components/HouseholdList';
 const HouseholdContainer = () => {
   return (
     <div className="householdContainer">
-      <h1>Household Container</h1>
+      {/* <h1>Household Container</h1> */}
       <HouseholdList />
     </div>
   );

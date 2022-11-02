@@ -14,7 +14,74 @@
   -webkit-text-size-adjust: 100%;
 }
 
-div {
+/* div {
+  border: 1px solid black;
+  padding: 3px;
+  margin: 3px;
+} */
+/* 
+.mainContainer {
+  border: 1px solid black;
+  padding: 3px;
+  margin: 3px;
+} */
+
+.headerContainer {
+  border: 1px solid black;
+  padding: 3px;
+  margin: 3px;
+  background-color: aqua;
+  flex: auto;
+  height: 50px;
+}
+.accountWindow {
+  max-width: 40px;
+  justify-content: flex-end;
+}
+
+.feedContainer {
+  border: 1px solid black;
+  padding: 3px;
+  margin: 3px;
+}
+
+.feed {
+  border: 1px solid black;
+  padding: 3px;
+  margin: 3px;
+}
+
+.feedItem {
+  border: 1px solid black;
+  padding: 3px;
+  margin: 3px;
+}
+
+.createHouseholdContainer {
+  border: 1px solid black;
+  padding: 3px;
+  margin: 3px;
+}
+
+.createHouseholdModal {
+  border: 1px solid black;
+  padding: 3px;
+  margin: 3px;
+}
+
+.createTaskContainer {
+  border: 1px solid black;
+  padding: 3px;
+  margin: 3px;
+}
+
+.createTaskModal {
+  border: 1px solid black;
+  padding: 3px;
+  margin: 3px;
+}
+
+.householdContainer {
   border: 1px solid black;
   padding: 3px;
   margin: 3px;
