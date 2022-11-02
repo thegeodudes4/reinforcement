@@ -1,9 +1,20 @@
 
 
-const FeedItem = () => {
+const FeedItem = (id) => {
 
   const deleteTask = () => {
-    console.log('you deleted task')
+    // console.log('event: ', event);
+  //   const taskId = parseInt(event.path[1].id);
+  //   fetch(`/api/${taskId}`, {
+  //     method: 'DELETE',
+  //     headers: { 'Content-Type': 'application/json' },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((task) => {
+  //       console.log('deleted task: ', task); // prints dbEntry that was deleted
+  //       const deletedTask = document.getElementById(taskId);
+  //       deletedTask.remove(); // removes task from DOM
+  //     });
   };
 
   const editTask = () => {

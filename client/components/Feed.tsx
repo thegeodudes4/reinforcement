@@ -19,7 +19,7 @@ const Feed = () => {
     <div className="feed">
       <h1>Feed</h1>
       {tasks.map((task, index) => {
-        return <FeedItem key = {`feedItem${index}`}/>
+        return <FeedItem key = {`feedItem${index}`} id= {index}/>
       })}
 
     </div>
