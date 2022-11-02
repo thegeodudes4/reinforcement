@@ -1,5 +1,4 @@
 import MainContainer from './containers/MainContainer';
-import './stylesheets/index.css';
 
 const App = () => {
   return (
