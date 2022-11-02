@@ -18,22 +18,6 @@ interface GoogleOAuthJWT {
   email: string;
 }
 
-// {
-//      iss: 'https://accounts.google.com',
-//      nbf: 1667336184,
-//      aud: '126874123890-m8lumkjj2n2gd9l1kg0ci4g8v5h91kd1.apps.googleusercontent.com',
-//      sub: '114168208168757928625',
-//      email: 'ebdeam@gmail.com',
-//      email_verified: true,
-//      azp: '126874123890-m8lumkjj2n2gd9l1kg0ci4g8v5h91kd1.apps.googleusercontent.com',
-//      name: 'Evan Deam',
-//      picture: 'https://lh3.googleusercontent.com/a/ALm5wu2l4H-4MUJRClfwC9cvHZnie9kUPslJM1ahpKlx=s96-c',
-//      given_name: 'Evan',
-//      family_name: 'Deam',
-//      iat: 1667336484,
-//      exp: 1667340084,
-//      jti: 'cfeb775d913a1be79540af5b70787ea1f1c24894'
-//    }
 
 const UserController: UserController = {
   createOrSignInUser: async (req, res, next) => {
