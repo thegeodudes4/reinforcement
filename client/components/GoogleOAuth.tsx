@@ -41,7 +41,7 @@ const GoogleOAuth = () => {
         onError={() => {
           console.log('Login Failed');
       }} />
-      <button onClick={getTodos}>Click Me</button>
+      <button onClick={getTodos}>Get Todos</button>
     </>
   )
 }

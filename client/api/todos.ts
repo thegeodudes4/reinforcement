@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const getTodos = async (orgId: number) => {
+export const getTodos = async () => {
   try {
-    const response = await axios.get(`todoAPI/getTodos/${orgId}`);
+    const response = await axios.get(`todoAPI/getTodos`);
     console.log("getTasksResponse", response.data)
     return response.data;
   } catch (error: any) {
