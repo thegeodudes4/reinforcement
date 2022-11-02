@@ -2,80 +2,118 @@ import { Request, Response, NextFunction } from "express";
 const db = require("../model/dbModel");
 import * as dotenv from "dotenv";
 dotenv.config();
+import jwt_decode from "jwt-decode";
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+
+const { JWT_SECRET } = process.env;
 
 interface UserController {
-  createUser: (req: Request, res: Response, next: NextFunction) => void;
-  verifyUser: (req: Request, res: Response, next: NextFunction) => void;
+  createOrSignInUser: (req: Request, res: Response, next: NextFunction) => void;
+  verifyJWT: (req: Request, res: Response, next: NextFunction) => void;
+}
+interface GoogleOAuthJWT {
+  name: string;
+  sub: string;
+  email: string;
 }
 
+// {
+//      iss: 'https://accounts.google.com',
+//      nbf: 1667336184,
+//      aud: '126874123890-m8lumkjj2n2gd9l1kg0ci4g8v5h91kd1.apps.googleusercontent.com',
+//      sub: '114168208168757928625',
+//      email: 'ebdeam@gmail.com',
+//      email_verified: true,
+//      azp: '126874123890-m8lumkjj2n2gd9l1kg0ci4g8v5h91kd1.apps.googleusercontent.com',
+//      name: 'Evan Deam',
+//      picture: 'https://lh3.googleusercontent.com/a/ALm5wu2l4H-4MUJRClfwC9cvHZnie9kUPslJM1ahpKlx=s96-c',
+//      given_name: 'Evan',
+//      family_name: 'Deam',
+//      iat: 1667336484,
+//      exp: 1667340084,
+//      jti: 'cfeb775d913a1be79540af5b70787ea1f1c24894'
+//    }
+
 const UserController: UserController = {
-  createUser: async (req, res, next) => {
-    console.log("here", req.body);
+  createOrSignInUser: async (req, res, next) => {
+    // const {} = req.body.JWT;
     try {
-      const { username, password, email } = req.body;
-      if (!username || !password || !email) {
-        return next({
-          log: null,
-          status: 400,
-          message: "Enter a valid username, email, and/or password",
-        });
-      }
+      const { name, sub, email } : GoogleOAuthJWT = jwt_decode(req.body.JWT);
+      const username = name;
+      const password = sub;
       const checkExistingUsernameQuery =
-        "SELECT id FROM users WHERE username = $1";
-      const valuesCheckUsername = [username];
+        "SELECT id, password FROM users WHERE email = $1";
+      const valuesCheckUsername = [email];
       const checkExistingUsernameResponse = await db.query(
         checkExistingUsernameQuery,
         valuesCheckUsername
       );
-      if (checkExistingUsernameResponse.rows.length) {
-        return next({
-          log: `Error caught in userController.createUser`,
-          status: 409,
-          message: "User already exists!",
-        });
-      }
-      const addUserQuery =
-        "INSERT INTO users (username, password, email) VALUES ($1, $2, $3) returning id";
-      const values = [username, password, email];
-      const response = await db.query(addUserQuery, values);
+      if (!checkExistingUsernameResponse.rows.length) {
+        // creating new account
+      const hashedPword = await bcrypt.hash(password, 10);
+
+      // make a post request to db to store hashed pw
+      const saveHashedPassInDb =
+      "INSERT INTO users (username, password, email) VALUES ($1, $2, $3) returning id";
+      const valuesSaveHashedPassInDb = [username, hashedPword, email];
+      const response = await db.query(saveHashedPassInDb, valuesSaveHashedPassInDb);
       res.locals.userId = response.rows[0].id;
       res.locals.username = username;
       return next();
-    } catch (error) {}
-  },
-
-  verifyUser: async (req, res, next) => {
-    try {
-      const { email, password } = req.body;
-
-      if (!email || !password) {
-        return next({
-          log: null,
-          message: "Please enter your email and/or password",
-        });
       }
+      
+      const comparedPassword = await bcrypt.compare(password, checkExistingUsernameResponse.rows[0].password)
 
-      const verifyUserQuery = "SELECT password, id FROM users WHERE email = $1";
-      const values = [email];
-      const checkExistingUsernameResponse = await db.query(
-        verifyUserQuery,
-        values
-      );
-      if (checkExistingUsernameResponse.rows[0].password === password) {
-        res.locals.userId = checkExistingUsernameResponse.rows[0].id;
+      if (comparedPassword === true) {
+        console.log('User exists and password matches');
+        const token = jwt.sign(
+          {
+            username: username,
+            userId: checkExistingUsernameResponse.rows[0].id,
+          },
+          JWT_SECRET,
+          { expiresIn: '7d' }
+        )
+        res.cookie('access_token', token, {httpOnly: true});
         return next();
-      } else {
-        return next({
-          log: `Error caught in userController.createUser`,
-          status: 409,
-          message: `Incorrect email or password `,
-        });
       }
+
+
+      // account exists, logging in
     } catch (error) {
       return next({
-        log: `Error caught in userController.verifyUser ${error}`,
+        log: `Error caught in userController.createOrSignInUser ${error}`,
         status: 400,
-        message: `Incorrect email or password ${error}`,
+        message: `Invalid login information ${error}`,
+      });
+    }
+  },
+
+  verifyJWT: async (req, res, next) => {
+    try {
+      const token = req.cookies.access_token;
+
+      if(!token){
+        next({
+          status: 400,
+          message: `Unauthorized request`,
+        })
+      }
+      
+      const verified = jwt.verify(token, JWT_SECRET);
+      res.locals.jwt = verified;
+
+      verified ? next() : next({
+        status: 400,
+        message: `Unauthorized request`,
+      })
+
+    } catch (error) {
+      return next({
+        log: `Error caught in userController.verifyJWT ${error}`,
+        status: 400,
+        message: `Invalid JWT ${error}`,
       });
     }
   },
