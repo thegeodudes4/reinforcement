@@ -4,27 +4,27 @@ import todoController from "../controllers/todoController";
 
 const router = express.Router();
 // signup route
-router.get("/getTodos/:orgId",  todoController.getTodos,  (req, res) => {
+router.get("/getTodos/:orgId", userController.verifyJWT, todoController.getTodos,  (req, res) => {
   res.status(200).json(res.locals.todoList);
 });
 
-router.post("/createOrg", todoController.createOrg, (req, res) => {
+router.post("/createOrg",userController.verifyJWT, todoController.createOrg, (req, res) => {
   res.status(200).json(res.locals.orgId);
 });
 
-router.post("/addTodo", todoController.addTodo, (req, res) => {
+router.post("/addTodo",userController.verifyJWT, todoController.addTodo, (req, res) => {
   res.status(200).json(res.locals.todoId);
 });
 
-router.put("/markComplete", todoController.markComplete, (req, res) => {
+router.put("/markComplete",userController.verifyJWT, todoController.markComplete, (req, res) => {
   res.status(200).json(res.locals.status);
 });
 
-router.delete("/deleteTodo",  todoController.deleteTodo, (req, res) => {
+router.delete("/deleteTodo",  userController.verifyJWT,todoController.deleteTodo, (req, res) => {
   res.status(200).json(res.locals.status);
 });
 
-router.put("/assignTodo",  todoController.assignTodo, (req, res) => {
+router.put("/assignTodo",userController.verifyJWT,  todoController.assignTodo, (req, res) => {
   
 });
 
