@@ -21,7 +21,6 @@ const Feed = () => {
       {tasks.map((task, index) => {
         return <FeedItem key = {`feedItem${index}`} id= {index}/>
       })}
-
     </div>
   );
 };

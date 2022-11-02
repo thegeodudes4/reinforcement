@@ -1,9 +1,10 @@
 
 
-const FeedItem = (id) => {
+const FeedItem = ({id}) => {
 
   const deleteTask = () => {
-    // console.log('event: ', event);
+    console.log('event: ', event);
+    console.log(parseInt(event.path[1].id))
   //   const taskId = parseInt(event.path[1].id);
   //   fetch(`/api/${taskId}`, {
   //     method: 'DELETE',
@@ -26,7 +27,7 @@ const FeedItem = (id) => {
   };
 
   return (
-    <div className="feedItem">
+    <div className="feedItem" id={id}>
       <h1>Feed Item</h1>
       <button type='button' className='deleteTaskButton' onClick={deleteTask}>X</button>
       <button type='button' className='editTaskButton' onClick={editTask}>EDIT</button>
