@@ -3,14 +3,15 @@ import express, { NextFunction, Request, Response } from "express";
 import path from "path";
 import userApiRouter from "./routes/user";
 import todoApiRouter from "./routes/todo";
+import cookieParser from 'cookie-parser';
 
-console.log("testing");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // parse body and cookies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // serve static files
 app.use(express.static(path.resolve("./client/dist/assets")));

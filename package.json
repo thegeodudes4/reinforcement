@@ -5,11 +5,18 @@
   "scripts": {
     "dev": "concurrently \"vite \" \"tsc -w\" \"node dist/server/server.js\"",
     "build": "tsc && vite build",
+    "deploy": "node_env=PRODUCTION",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.4.0",
+    "axios": "^1.1.3",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "pg": "^8.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
