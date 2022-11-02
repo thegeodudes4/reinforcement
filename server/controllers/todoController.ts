@@ -15,9 +15,9 @@ interface TodoController {
 const TodoController: TodoController = {
   getTodos: async (req, res, next) => {
     try {
-      const {orgId} = req.params;
-      const getTodosQuery = "SELECT * FROM todos WHERE org_id = $1"
-      const values = [orgId];
+      const {userId} = res.locals.jwt;
+      const getTodosQuery = "SELECT td.* FROM todos td JOIN users u ON u.org_id = td.org_id WHERE u.id = $1"
+      const values = [16];
       const listOfTodos = await db.query(getTodosQuery, values);
       res.locals.todoList = listOfTodos.rows;
       return next();
@@ -52,7 +52,7 @@ const TodoController: TodoController = {
   addTodo: async (req, res, next) => {
     try {
       const {todos, orgId, userId} = req.body;
-      const addTodoQuery = "INSERT INTO todos (todos, complete, org_id, user_id) VALUES ($1, $2, $3, $4) returning id";
+      const addTodoQuery = "INSERT INTO todos (todos, complete, org_id, users_id) VALUES ($1, $2, $3, $4) returning id";
       const values = [todos, false, orgId, userId];
       const addTodoResponse = await db.query(addTodoQuery, values);
       res.locals.todoId = addTodoResponse.rows[0].id;

@@ -4,7 +4,7 @@ import todoController from "../controllers/todoController";
 
 const router = express.Router();
 // signup route
-router.get("/getTodos/:orgId", userController.verifyJWT, todoController.getTodos,  (req, res) => {
+router.get("/getTodos",userController.verifyJWT,  todoController.getTodos,  (req, res) => {
   res.status(200).json(res.locals.todoList);
 });
 
