@@ -13,3 +13,9 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+div {
+  border: 1px solid black;
+  padding: 3px;
+  margin: 3px;
+}
