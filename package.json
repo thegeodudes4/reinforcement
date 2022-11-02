@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "concurrently \"vite \" \"tsc -w\" \"node dist/server/server.js\"",
     "build": "tsc && vite build",
-    "deploy": "node_env=PRODUCTION",
     "preview": "vite preview"
   },
   "dependencies": {
